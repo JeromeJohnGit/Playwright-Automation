@@ -12,9 +12,9 @@
 # Error details
 
 ```
-TimeoutError: locator.waitFor: Timeout 5000ms exceeded.
+TimeoutError: locator.click: Timeout 5000ms exceeded.
 Call log:
-  - waiting for locator('.suggestions') to be visible
+  - waiting for locator('.suggestions li').filter({ hasText: 'India' })
 
 ```
 
@@ -95,15 +95,14 @@ Call log:
   34 |     await page.getByRole('button', { name: 'Checkout' }).click();
   35 |     await page.waitForTimeout(1500);
   36 | 
-  37 |     // Enter country and select a location from suggestions
-  38 |     const countryInput = page.locator('#country');
-  39 |     await countryInput.fill('India');
-  40 |     const suggestionBox = page.locator('.suggestions');
-> 41 |     await suggestionBox.waitFor({ state: 'visible', timeout: 5000 });
-     |                         ^ TimeoutError: locator.waitFor: Timeout 5000ms exceeded.
-  42 |     await page.locator('.suggestions li', { hasText: 'India' }).click({ force: true });
-  43 |     await page.waitForTimeout(1200);
-  44 | 
-  45 |    
-  46 | });
+  37 |    // Enter country and select a location from suggestions
+  38 | const countryInput = page.locator('#country');
+  39 | await countryInput.fill('India');
+  40 | 
+  41 | // Wait for the suggestion to appear and click it
+> 42 | await page.locator('.suggestions li', { hasText: 'India' }).click({ force: true, timeout: 5000 });
+     |                                                             ^ TimeoutError: locator.click: Timeout 5000ms exceeded.
+  43 | 
+  44 |    
+  45 | });
 ```

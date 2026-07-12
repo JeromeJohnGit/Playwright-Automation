@@ -34,13 +34,12 @@ test('Login, add iPhone X, update quantity', async ({ page }) => {
     await page.getByRole('button', { name: 'Checkout' }).click();
     await page.waitForTimeout(1500);
 
-    // Enter country and select a location from suggestions
-    const countryInput = page.locator('#country');
-    await countryInput.fill('India');
-    const suggestionBox = page.locator('.suggestions');
-    await suggestionBox.waitFor({ state: 'visible', timeout: 5000 });
-    await page.locator('.suggestions li', { hasText: 'India' }).click({ force: true });
-    await page.waitForTimeout(1200);
+   // Enter country and select a location from suggestions
+const countryInput = page.locator('#country');
+await countryInput.fill('India');
+
+// Wait for the suggestion to appear and click it
+await page.locator('.suggestions li', { hasText: 'India' }).click({ force: true, timeout: 5000 });
 
    
 });
